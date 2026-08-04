@@ -75,3 +75,45 @@ cd testssl.sh
 sudo ln -s $PWD/testssl.sh /usr/local/bin/testssl
 ```
 
+### Usage Examples
+
+'''bash
+# Full scan
+python3 web_scanner.py https://example.com
+
+# SSL/TLS only scan
+python3 web_scanner.py example.com --ssl-only
+
+# Quick scan (headers, cookies, SSL)
+python3 web_scanner.py https://example.com --quick
+
+# Custom port and output directory
+python3 web_scanner.py example.com -p 8443 -o my_scan_results
+
+# With more threads for faster scanning
+python3 web_scanner.py https://example.com -t 10
+'''
+
+
+### Important Security Notes
+
+'''bash
+⚠️ CRITICAL WARNINGS:
+
+· Only test systems you own or have explicit written permission to test
+· Unauthorized scanning is illegal and unethical
+· Some scans can be detected by IDS/IPS systems
+· Nikto scans are noisy and will appear in web server logs
+· Rate limiting may apply - adjust thread count accordingly
+
+4. What This Scanner Checks
+
+· Nikto: Comprehensive web server vulnerability scanning
+· SSL/TLS: Certificate validation, protocol support, cipher strength
+· Security Headers: HSTS, CSP, X-Frame-Options, etc.
+· Cookie Security: Secure, HttpOnly, SameSite flags
+· WAF Detection: Identifies web application firewalls
+· Technology Detection: Identifies web technologies in use
+· Directory Enumeration: Common directory/file discovery
+· Nmap: Service detection and HTTP-specific scripts
+'''
