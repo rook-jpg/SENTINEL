@@ -77,7 +77,7 @@ sudo ln -s $PWD/testssl.sh /usr/local/bin/testssl
 
 ### Usage Examples
 
-'''bash
+
 # Full scan
 python3 web_scanner.py https://example.com
 
@@ -92,12 +92,12 @@ python3 web_scanner.py example.com -p 8443 -o my_scan_results
 
 # With more threads for faster scanning
 python3 web_scanner.py https://example.com -t 10
-'''
+
 
 
 ### Important Security Notes
 
-'''bash
+
 ⚠️ CRITICAL WARNINGS:
 
 · Only test systems you own or have explicit written permission to test
@@ -116,4 +116,4 @@ python3 web_scanner.py https://example.com -t 10
 · Technology Detection: Identifies web technologies in use
 · Directory Enumeration: Common directory/file discovery
 · Nmap: Service detection and HTTP-specific scripts
-'''
+
