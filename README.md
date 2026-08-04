@@ -106,7 +106,7 @@ python3 web_scanner.py https://example.com -t 10
 · Nikto scans are noisy and will appear in web server logs
 · Rate limiting may apply - adjust thread count accordingly
 
-4. What This Scanner Checks
+ What This Scanner Checks
 
 · Nikto: Comprehensive web server vulnerability scanning
 · SSL/TLS: Certificate validation, protocol support, cipher strength
@@ -116,4 +116,8 @@ python3 web_scanner.py https://example.com -t 10
 · Technology Detection: Identifies web technologies in use
 · Directory Enumeration: Common directory/file discovery
 · Nmap: Service detection and HTTP-specific scripts
+
+### REQUIREMENTS
+
+pip install -r requirements.txt
 
