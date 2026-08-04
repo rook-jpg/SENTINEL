@@ -53,8 +53,25 @@ Built with Python, SentinelWeb orchestrates tools like Nikto, Nmap, SSLyze, and 
 
 ### Prerequisites
 
-```bash
-# System Requirements
 - Python 3.7 or higher
 - Linux/Unix-based system (recommended)
-- Root/sudo privileges (for certain scans)# SENTINEL
+- Root/sudo privileges (for certain scans)
+
+### Required Tools
+
+```bash
+# Update package list
+sudo apt-get update
+
+# Install core tools
+sudo apt-get install -y nikto nmap whatweb testssl.sh
+
+# Install Python packages
+pip install colorama requests urllib3 sslyze wafw00f gobuster
+
+# Clone testssl.sh if not installed via package manager
+git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+cd testssl.sh
+sudo ln -s $PWD/testssl.sh /usr/local/bin/testssl
+```
+
