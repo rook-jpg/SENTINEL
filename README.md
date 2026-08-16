@@ -7,9 +7,15 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Security](https://img.shields.io/badge/Security-Scanner-red)
 
+<!-- New README-level SENTINEL badge/logo -->
+
+![SENTINEL](https://img.shields.io/badge/SENTINEL-Scanner-purple?style=for-the-badge&logo=security)
+
+**SENTINEL**
+
 **Comprehensive Web Application Security Assessment Tool**
 
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Documentation](#documentation) • [Contributing](#contributing)
+[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Documentation](#documentation) • [Contributing]
 
 </div>
 
@@ -30,7 +36,7 @@
 
 ## 📖 Overview
 
-SentinelWeb is a comprehensive web security scanner that integrates multiple industry-standard security tools into a single, unified platform. It automates the process of web vulnerability assessment, SSL/TLS analysis, security header inspection, and more.
+SentinelWeb is a comprehensive web security scanner that integrates multiple industry-standard security tools into a single, unified platform. It automates the process of web vulnerability assessment,[...]
 
 Built with Python, SentinelWeb orchestrates tools like Nikto, Nmap, SSLyze, and WhatWeb to provide a holistic view of your web application's security posture.
 
@@ -120,4 +126,3 @@ python3 web_scanner.py https://example.com -t 10
 ### REQUIREMENTS
 
 pip install -r requirements.txt
-
