@@ -1,127 +1,226 @@
-# SentinelWeb - Advanced Web Security Scanner
+# SentinelWeb
 
-<div align="center">
+![SentinelWeb v1.0.0](https://img.shields.io/badge/SentinelWeb-v1.0.0-blue) ![Python 3.7+](https://img.shields.io/badge/Python-3.7+-green) ![MIT License](https://img.shields.io/badge/License-MIT-yellow)
 
-<!-- Custom SENTINEL logo (beveled highlights and soft reflections give a 3D/embossed look) -->
-<img src="assets/sentinel_logo.svg" alt="SENTINEL logo - beveled highlights and soft reflections give a 3D/embossed look" width="600"/>
+<p align="center">
+  <img src="assets/sentinel_hero.png" alt="SentinelWeb hero" width="720"/>
+</p>
 
-![SentinelWeb Logo](https://img.shields.io/badge/SentinelWeb-v1.0.0-blue)
-![Python](https://img.shields.io/badge/Python-3.7+-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-![Security](https://img.shields.io/badge/Security-Scanner-red)
-
-**SENTINEL**
-
-**Comprehensive Web Application Security Assessment Tool**
-
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Documentation](#documentation) • [Contributing](#contributing)
-
-</div>
+SentinelWeb is an orchestration framework that runs industry-standard web security tools (Nikto, Nmap, testssl.sh, SSLyze, WhatWeb, wafw00f, Gobuster) to produce concise, actionable scan reports. This README is a showcase-style, visual guide with a focused CLI reference for easy adoption.
 
 ---
 
-## ⚠️ LEGAL DISCLAIMER
+## Table of contents
 
-**IMPORTANT:** This tool is intended for legitimate security testing purposes only. You must:
-
-- ✅ Have **explicit written permission** from the system owner before scanning
-- ✅ Use only on systems **you own** or are **authorized to test**
-- ✅ Comply with all applicable **laws and regulations**
-- ✅ Respect **rate limits** and **terms of service**
-
-**Unauthorized scanning of systems is illegal and unethical. The developers assume no liability for misuse.**
-
----
-
-## 📖 Overview
-
-SentinelWeb is a comprehensive web security scanner that integrates multiple industry-standard security tools into a single, unified platform. It automates the process of web vulnerability assessment,[...]
-
-Built with Python, SentinelWeb orchestrates tools like Nikto, Nmap, SSLyze, and WhatWeb to provide a holistic view of your web application's security posture.
-
-### 🎯 Key Features
-
-- **🔍 Multi-Tool Integration**: Seamlessly integrates with Nikto, Nmap, SSLyze, testssl.sh, WhatWeb, wafw00f, and Gobuster
-- **🔒 SSL/TLS Deep Analysis**: Certificate validation, protocol support, cipher strength assessment
-- **🛡️ Security Headers Check**: Comprehensive HTTP security headers analysis
-- **🍪 Cookie Security Audit**: Secure, HttpOnly, and SameSite flag validation
-- **🛑 WAF Detection**: Identifies Web Application Firewalls
-- **📊 Technology Fingerprinting**: Discovers web technologies and frameworks
-- **📁 Directory Enumeration**: Common directory and file discovery
-- **⚡ Concurrent Scanning**: Multi-threaded execution for faster results
-- **📝 Comprehensive Reporting**: Detailed JSON and text-based scan reports
-- **🎨 Color-Coded Output**: Easy-to-read terminal output with color indicators
+- Features
+- Screenshots
+- Installation
+- Quick start
+- CLI reference
+- Output & reports
+- Configuration
+- Best practices & legal
+- Contributing
+- License
 
 ---
 
-## 🚀 Installation
+## Features
 
-### Prerequisites
+- Orchestrates multiple scanners (Nikto, Nmap, testssl.sh, SSLyze, WhatWeb, wafw00f, Gobuster)
+- SSL/TLS analysis: certificate checks, protocol and cipher enumeration
+- HTTP security headers & cookie flag validation (HSTS, CSP, X-Frame-Options, Secure/HttpOnly/SameSite)
+- WAF detection and technology fingerprinting
+- Directory and file enumeration
+- Concurrent scanning with configurable thread count
+- JSON and plain-text per-scan reports
+- Colorized, human-friendly terminal summaries
 
-- Python 3.7 or higher
-- Linux/Unix-based system (recommended)
-- Root/sudo privileges (for certain scans)
+---
 
-### Required Tools
+## Screenshots
 
+Visuals demonstrate expected output and report samples. Replace placeholders with actual PNGs in assets/ (recommended 1280×720 or 2:1 aspect).
+
+- Dashboard / summary
+  <p align="center">
+    <img src="assets/sentinel_summary.png" alt="Scan summary" width="900"/>
+  </p>
+
+- Detailed JSON report preview
+  <p align="center">
+    <img src="assets/sentinel_report_preview.png" alt="Report JSON preview" width="900"/>
+  </p>
+
+- Directory enumeration / Gobuster output
+  <p align="center">
+    <img src="assets/sentinel_gobuster.png" alt="Directory enumeration" width="900"/>
+  </p>
+
+Notes:
+- Filenames above are examples — commit your screenshots to assets/ and keep names consistent.
+- Use PNGs for lossless clarity in README.
+
+---
+
+## Installation
+
+Prerequisites:
+- Python 3.7+
+- Linux/Unix recommended
+- Root/sudo for certain scans
+- External tools: nikto, nmap, whatweb, testssl.sh, gobuster
+
+Install Python deps:
 ```bash
-# Update package list
-sudo apt-get update
-
-# Install core tools
-sudo apt-get install -y nikto nmap whatweb testssl.sh
-
-# Install Python packages
-pip install colorama requests urllib3 sslyze wafw00f gobuster
-
-# Clone testssl.sh if not installed via package manager
-git clone --depth 1 https://github.com/drwetter/testssl.sh.git
-cd testssl.sh
-sudo ln -s $PWD/testssl.sh /usr/local/bin/testssl
+pip install -r requirements.txt
 ```
 
-### Usage Examples
+Install core utilities (Debian/Ubuntu example):
+```bash
+sudo apt-get update
+sudo apt-get install -y nikto nmap whatweb gobuster
+git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+cd testssl.sh
+sudo ln -s "$PWD/testssl.sh" /usr/local/bin/testssl
+```
 
+Optional Python packages (if not in requirements.txt):
+```bash
+pip install colorama requests urllib3 sslyze wafw00f
+```
 
-# Full scan
+---
+
+## Quick start
+
+Full scan:
+```bash
 python3 web_scanner.py https://example.com
+```
 
-# SSL/TLS only scan
-python3 web_scanner.py example.com --ssl-only
-
-# Quick scan (headers, cookies, SSL)
+Quick scan (headers, cookies, SSL):
+```bash
 python3 web_scanner.py https://example.com --quick
+```
 
-# Custom port and output directory
+SSL/TLS only:
+```bash
+python3 web_scanner.py example.com --ssl-only
+```
+
+Custom port and output:
+```bash
 python3 web_scanner.py example.com -p 8443 -o my_scan_results
+```
 
-# With more threads for faster scanning
-python3 web_scanner.py https://example.com -t 10
+Increase concurrency:
+```bash
+python3 web_scanner.py example.com -t 10
+```
 
+---
 
+## CLI reference
 
-### Important Security Notes
+Important flags (short + long form):
 
+- -u, --url <target>
+  - Target URL or hostname (required)
+- -p, --port <port>
+  - Target port (default: 80/443 inferred)
+- -o, --output <dir>
+  - Output directory for reports (default: ./results/<timestamp>)
+- -t, --threads <n>
+  - Number of concurrent worker threads (default: 4)
+- --quick
+  - Run a low-impact quick scan (headers, cookies, basic SSL checks)
+- --ssl-only
+  - Run only SSL/TLS checks (testssl.sh / SSLyze)
+- --no-nikto
+  - Skip Nikto scan (useful to reduce noise)
+- --no-enum
+  - Skip directory/file enumeration
+- --timeout <seconds>
+  - Per-request timeout for external tools
+- --verbose / -v
+  - Verbose output for debugging
+- --json
+  - Produce JSON report in addition to plain text
+- --config <file>
+  - Path to config file (override defaults)
+- --help / -h
+  - Show help and CLI options
 
-⚠️ CRITICAL WARNINGS:
+Example: quick SSL scan, save JSON:
+```bash
+python3 web_scanner.py https://example.com --ssl-only --json -o results/example_ssl
+```
 
-· Only test systems you own or have explicit written permission to test
-· Unauthorized scanning is illegal and unethical
-· Some scans can be detected by IDS/IPS systems
-· Nikto scans are noisy and will appear in web server logs
-· Rate limiting may apply - adjust thread count accordingly
+(If your project has additional options, I can expand this reference into a full auto-generated manpage or include --examples for each tool.)
 
- What This Scanner Checks
+---
 
-· Nikto: Comprehensive web server vulnerability scanning
-· SSL/TLS: Certificate validation, protocol support, cipher strength
-· Security Headers: HSTS, CSP, X-Frame-Options, etc.
-· Cookie Security: Secure, HttpOnly, SameSite flags
-· WAF Detection: Identifies web application firewalls
-· Technology Detection: Identifies web technologies in use
-· Directory Enumeration: Common directory/file discovery
-· Nmap: Service detection and HTTP-specific scripts
+## Output & reports
 
-### REQUIREMENTS
+- JSON: machine-readable report with sections for issues, headers, SSL findings, WAF detection, and enumeration results.
+- Plain-text: human-readable summary and per-check logs.
+- Terminal: color-coded risk levels (INFO / LOW / MEDIUM / HIGH).
 
-pip install -r requirements.txt
+Example report layout (JSON keys):
+```json
+{
+  "target": "https://example.com",
+  "timestamp": "2026-08-16T12:34:56Z",
+  "summary": { "high": 1, "medium": 3, "low": 5 },
+  "ssl": { "expired": false, "ciphers": [...] },
+  "headers": { "hsts": true, "csp": null },
+  "vulnerabilities": [ ... ],
+  "enumeration": { "dirs_found": [...], "nmap": {...} }
+}
+```
+
+---
+
+## Configuration
+
+Place default overrides in a config file (YAML or JSON). Example keys:
+- max_threads
+- timeout_seconds
+- excluded_checks (list)
+- gobuster_wordlist
+- output_dir
+
+I can provide a sample config file template (config.example.yml) if you want.
+
+---
+
+## Best practices & legal
+
+- You MUST have explicit written authorization from the system owner before scanning.
+- Start with `--quick` on production targets to reduce noise.
+- Reduce thread count and use rate limiting to avoid triggering IDS/IPS.
+- Nikto and aggressive enumeration are noisy; they will appear in server logs.
+- The authors assume no liability for misuse.
+
+---
+
+## Contributing
+
+- Open issues for bugs or feature requests.
+- For pull requests: include tests or a runnable example and update README/screenshots as needed.
+- Use a feature branch per change and provide a clear description of the change.
+
+---
+
+## Assets / screenshots guidance
+
+- Resolution: 1280×720 recommended (or 2:1 aspect).
+- Filenames: use assets/sentinel_summary.png, assets/sentinel_report_preview.png, assets/sentinel_gobuster.png
+- Keep images under 1 MB for faster loading, prefer PNG for clarity.
+
+---
+
+## License
+
+MIT — see LICENSE
