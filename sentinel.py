@@ -70,18 +70,46 @@ class WebSecurityScanner:
                 
         return tools
     
+    def _print_repo_banner(self):
+        """Print a prominent repository banner with the repo name (SENTINEL).
+        This will appear when the scanner runs.
+        """
+        # Try to use pyfiglet for a large banner if available, otherwise use a built-in ASCII fallback
+        banner_text = "SENTINEL"
+        try:
+            import pyfiglet
+            fig = pyfiglet.Figlet(font='slant')
+            art = fig.renderText(banner_text)
+            print(Style.BRIGHT + Fore.MAGENTA + art + Style.RESET_ALL)
+        except Exception:
+            # Simple ASCII fallback
+            art = (
+                "  _____  _____ _____ _____ _   _ _____ _   _ \n"
+                " / ____|/ ____/ ____/ ____| \ | |_   _| \ | |\n"
+                "| (___ | (___| (___| (___ |  \| | | | |  \| |\n"
+                " \___ \\ \___ \\___ \\___ \\| . ` | | | | . ` |\n"
+                " ____) |____) |___) |___) | |\  |_| |_| | |\  |\n"
+                "|_____/|_____/_____/_____/|_| \_|_____|_| \_|\n"
+            )
+            print(Style.BRIGHT + Fore.MAGENTA + art + Style.RESET_ALL)
+            # Also print bold repo name for clarity
+            print(Style.BRIGHT + Fore.YELLOW + "**SENTINEL**" + Style.RESET_ALL)
+
     def print_banner(self):
         """Print scanner banner"""
+        # Repo banner (big name) — this is what the user asked to appear when it runs
+        self._print_repo_banner()
+
         banner = f"""
-{Fore.CYAN}{'='*60}
-{Fore.YELLOW}🔍 WEB SECURITY SCANNER
-{Fore.CYAN}{'='*60}
-{Fore.GREEN}Target: {self.target}
-{Fore.GREEN}Hostname: {self.hostname}
-{Fore.GREEN}Port: {self.port}
-{Fore.GREEN}Output Directory: {self.output_dir}
-{Fore.CYAN}{'='*60}
-        """
+ {Fore.CYAN}{'='*60}
+ {Fore.YELLOW}🔍 WEB SECURITY SCANNER
+ {Fore.CYAN}{'='*60}
+ {Fore.GREEN}Target: {self.target}
+ {Fore.GREEN}Hostname: {self.hostname}
+ {Fore.GREEN}Port: {self.port}
+ {Fore.GREEN}Output Directory: {self.output_dir}
+ {Fore.CYAN}{'='*60}
+         """
         print(banner)
         self._print_tools_status()
         
