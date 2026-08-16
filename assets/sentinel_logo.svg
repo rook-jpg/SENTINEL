@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="SENTINEL logo - beveled highlights and soft reflections give a 3D/embossed look">
+  <defs>
+    <linearGradient id="metalGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f4f6f7" />
+      <stop offset="45%" stop-color="#bfc6ca" />
+      <stop offset="55%" stop-color="#9aa1a5" />
+      <stop offset="100%" stop-color="#d7dce0" />
+    </linearGradient>
+
+    <linearGradient id="shine" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <filter id="emboss" x="-50%" y="-50%" width="200%" height="200%">
+      <!-- create a subtle bevel/emboss effect -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.7" specularExponent="20" lighting-color="#ffffff" result="specOut">
+        <fePointLight x="-5000" y="-10000" z="20000"/>
+      </feSpecularLighting>
+      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specMask"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="specMask"/>
+      </feMerge>
+    </filter>
+
+    <!-- subtle grain texture -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" result="noise" />
+      <feColorMatrix type="saturate" values="0" />
+      <feBlend in="SourceGraphic" in2="noise" mode="overlay" opacity="0.06"/>
+    </filter>
+
+    <style>
+      <![CDATA[
+      .word { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 900; font-size: 120px; letter-spacing: 18px; }
+      .cut { fill: url(#metalGrad); stroke: rgba(0,0,0,0.45); stroke-width: 1.8; }
+      .shine { fill: url(#shine); opacity: 0.45; mix-blend-mode: screen; }
+      ]]>
+    </style>
+  </defs>
+
+  <!-- Transparent background so README background shows through -->
+  <rect width="1200" height="300" fill="none" />
+
+  <!-- Render text twice for layered metallic + highlight effect -->
+  <g transform="translate(40,190)" filter="url(#emboss)">
+    <text class="word cut" x="0" y="0">SENTINEL</text>
+  </g>
+
+  <!-- subtle top highlight using clipped text -->
+  <g transform="translate(40,190)">
+    <defs>
+      <clipPath id="textClip"><text class="word" x="0" y="0">SENTINEL</text></clipPath>
+    </defs>
+    <rect x="0" y="-120" width="1200" height="120" fill="url(#shine)" clip-path="url(#textClip)"/>
+  </g>
+
+  <!-- extra fine inner lines to mimic angular cuts -->
+  <g transform="translate(40,190)" fill="none" stroke="#c7cacc" stroke-width="6">
+    <!-- manual stylized slices for S and E and L (approximate decorative cuts) -->
+    <path d="M38 -68 L150 -68" stroke-linecap="butt" opacity="0.18"/>
+    <path d="M38 -10 L150 -10" stroke-linecap="butt" opacity="0.12"/>
+    <path d="M980 -68 L1090 -68" stroke-linecap="butt" opacity="0.18"/>
+  </g>
+
+  <!-- Apply very subtle grain overlay across the logo area -->
+  <g filter="url(#grain)">
+    <rect x="0" y="0" width="1200" height="300" fill="transparent" />
+  </g>
+
+  <!-- Accessibility title/desc -->
+  <title>SENTINEL logo - beveled highlights and soft reflections give a 3D/embossed look</title>
+  <desc>Stylized metallic wordmark reading SENTINEL on a transparent background. Lighting uses beveled highlights and soft reflections to create a 3D embossed appearance.</desc>
+</svg>
