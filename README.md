@@ -2,20 +2,19 @@
 
 <div align="center">
 
+<!-- Custom SENTINEL logo (beveled highlights and soft reflections give a 3D/embossed look) -->
+<img src="assets/sentinel_logo.svg" alt="SENTINEL logo - beveled highlights and soft reflections give a 3D/embossed look" width="600"/>
+
 ![SentinelWeb Logo](https://img.shields.io/badge/SentinelWeb-v1.0.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.7+-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Security](https://img.shields.io/badge/Security-Scanner-red)
 
-<!-- New README-level SENTINEL badge/logo -->
-
-![SENTINEL](https://img.shields.io/badge/SENTINEL-Scanner-purple?style=for-the-badge&logo=security)
-
 **SENTINEL**
 
 **Comprehensive Web Application Security Assessment Tool**
 
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Documentation](#documentation) • [Contributing]
+[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Documentation](#documentation) • [Contributing](#contributing)
 
 </div>
 
