@@ -22,7 +22,7 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 class WebSecurityScanner:
-    def __init__(self, target, output_dir="scan_results", threads=5, timeout=10):
+    def __init__(self, target, output_dir="scan_results", threads=5, timeout=10, port=None):
         """
         Initialize the Web Security Scanner
         
@@ -31,6 +31,7 @@ class WebSecurityScanner:
             output_dir: Directory to store scan results
             threads: Number of concurrent threads
             timeout: Timeout for requests in seconds
+            port: Explicit target port (default: auto-detect from URL or 80/443)
         """
         self.target = target
         self.output_dir = output_dir
@@ -45,7 +46,7 @@ class WebSecurityScanner:
         # Parse target
         parsed = urlparse(target if target.startswith(('http://', 'https://')) else f'https://{target}')
         self.hostname = parsed.hostname or target
-        self.port = parsed.port or (443 if parsed.scheme == 'https' else 80)
+        self.port = port or parsed.port or (443 if parsed.scheme == 'https' else 80)
         
     def _check_tools(self):
         """Check which security tools are available on the system"""
@@ -63,7 +64,7 @@ class WebSecurityScanner:
         for tool in tools:
             try:
                 subprocess.run([tool, '--version' if tool != 'nikto' else '-Version'], 
-                             capture_output=True, timeout=5)
+                              capture_output=True, timeout=5)
                 tools[tool] = True
             except (subprocess.SubprocessError, FileNotFoundError):
                 pass
@@ -579,7 +580,8 @@ WARNING: Only use on systems you own or have explicit permission to test!
         """
     )
     
-    parser.add_argument('target', help='Target URL or IP address')
+    parser.add_argument('target', nargs='?', help='Target URL or IP address')
+    parser.add_argument('-u', '--url', dest='target_url', help='Target URL or IP address')
     parser.add_argument('-p', '--port', type=int, help='Target port (default: auto-detect)')
     parser.add_argument('-o', '--output', default='scan_results', help='Output directory for results')
     parser.add_argument('-t', '--threads', type=int, default=5, help='Number of concurrent threads (default: 5)')
@@ -588,6 +590,9 @@ WARNING: Only use on systems you own or have explicit permission to test!
     parser.add_argument('--quick', action='store_true', help='Run quick scan (skip time-intensive scans)')
     
     args = parser.parse_args()
+    target = args.target_url or args.target
+    if not target:
+        parser.error('a target URL or IP address is required')
     
     # Suppress SSL warnings for testing
     import urllib3
@@ -595,10 +600,11 @@ WARNING: Only use on systems you own or have explicit permission to test!
     
     # Initialize scanner
     scanner = WebSecurityScanner(
-        target=args.target,
+        target=target,
         output_dir=args.output,
         threads=args.threads,
-        timeout=args.timeout
+        timeout=args.timeout,
+        port=args.port,
     )
     
     # Run appropriate scan
