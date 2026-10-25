@@ -6,7 +6,7 @@
   <img src="assets/sentinel_hero.png" alt="SentinelWeb hero" width="720"/>
 </p>
 
-SentinelWeb is an orchestration framework that runs industry-standard web security tools (Nikto, Nmap, testssl.sh, SSLyze, WhatWeb, wafw00f, Gobuster) to produce concise, actionable scan reports. This README is a showcase-style, visual guide with a focused CLI reference for easy adoption.
+SentinelWeb is an orchestration framework that runs industry-standard web security tools (Nikto, Nmap, testssl.sh, SSLyze, WhatWeb, wafw00f, Gobuster) to produce concise, actionable scan reports. The project is implemented in Python and is designed to be run from the repository root.
 
 ---
 
@@ -96,27 +96,27 @@ pip install colorama requests urllib3 sslyze wafw00f
 
 Full scan:
 ```bash
-python3 web_scanner.py https://example.com
+python3 sentinel.py https://example.com
 ```
 
 Quick scan (headers, cookies, SSL):
 ```bash
-python3 web_scanner.py https://example.com --quick
+python3 sentinel.py https://example.com --quick
 ```
 
 SSL/TLS only:
 ```bash
-python3 web_scanner.py example.com --ssl-only
+python3 sentinel.py example.com --ssl-only
 ```
 
 Custom port and output:
 ```bash
-python3 web_scanner.py example.com -p 8443 -o my_scan_results
+python3 sentinel.py example.com -p 8443 -o my_scan_results
 ```
 
 Increase concurrency:
 ```bash
-python3 web_scanner.py example.com -t 10
+python3 sentinel.py example.com -t 10
 ```
 
 ---
@@ -154,7 +154,7 @@ Important flags (short + long form):
 
 Example: quick SSL scan, save JSON:
 ```bash
-python3 web_scanner.py https://example.com --ssl-only --json -o results/example_ssl
+python3 sentinel.py https://example.com --ssl-only --json -o results/example_ssl
 ```
 
 (If your project has additional options, I can expand this reference into a full auto-generated manpage or include --examples for each tool.)
